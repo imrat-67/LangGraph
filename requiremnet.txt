@@ -1,0 +1,6 @@
+langchian
+langgraph
+typing
+dotenv
+langchain_google_genai
+langchain_ollama
