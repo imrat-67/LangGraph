@@ -1,0 +1,1 @@
+print("it's a practice python folder that i will upload in drive wiht claude mcp")
