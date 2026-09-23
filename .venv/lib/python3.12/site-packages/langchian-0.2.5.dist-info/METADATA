@@ -1,0 +1,18 @@
+Metadata-Version: 2.4
+Name: langchian
+Version: 0.2.5
+Summary: Toy library for AI related stuff
+Author: 
+Requires-Dist: pyperclip
+Requires-Dist: streamlit
+Requires-Dist: requests
+Requires-Dist: pandas
+Requires-Dist: python-dotenv
+Requires-Dist: langchain
+Requires-Dist: langchain-core
+Requires-Dist: langchain-openai
+Requires-Dist: langchain-community
+Requires-Dist: openai
+Requires-Dist: faiss-cpu
+Dynamic: requires-dist
+Dynamic: summary
