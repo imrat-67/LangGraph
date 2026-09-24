@@ -37,3 +37,6 @@ def random_number(min_value: int, max_value: int) -> int:
 
 if __name__ == "__main__":
     mcp.run()
+
+
+

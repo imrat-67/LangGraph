@@ -11,3 +11,13 @@ duckduckgo-search
 langchain_experimental
 ddgs
 wikipedia
+langchain-text-splitters
+streamlit
+langchain
+langchain-text-splitters
+langchain-community
+langchain-huggingface
+langchain-ollama
+faiss-cpu
+pypdf
+sentence-transformers
