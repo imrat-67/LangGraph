@@ -1,0 +1,5 @@
+streamlit
+langgraph
+langgraph-checkpoint-postgres
+langchain-ollama
+psycopg[binary,pool]
