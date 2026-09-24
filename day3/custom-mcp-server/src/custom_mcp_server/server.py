@@ -1,14 +1,17 @@
 import random
 from datetime import date, datetime
 
-from fastmcp import FastMCP
+try:
+    from fastmcp import FastMCP  # custom-mcp-server's own .venv (fastmcp 4)
+except ImportError:
+    from mcp.server.fastmcp import FastMCP  # any venv that only has the official mcp package
 
 
 # Create the MCP server
 mcp = FastMCP(name="Custom Tools Server")
 
 
-@mcp.tool
+@mcp.tool()
 def calculate_age(date_of_birth: str) -> int:
     """
     Calculate a person's current age from their date of birth.
@@ -24,7 +27,7 @@ def calculate_age(date_of_birth: str) -> int:
     return age
 
 
-@mcp.tool
+@mcp.tool()
 def random_number(min_value: int, max_value: int) -> int:
     """
     Generate a random integer between min_value and max_value (inclusive).

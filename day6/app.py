@@ -1,27 +1,12 @@
-# =========================================================
-# Day 6: ONE chatbot with EVERYTHING inside (Streamlit + LangGraph)
-# =========================================================
-# One normal chat window. No mode buttons. Behind the scenes it has:
-#   - Memory (day 4): remembers facts about you forever + keeps every chat (Postgres)
-#   - Tools  (day 3): can call calculate_age / random_number when needed
-#   - RAG    (day 5): if you upload a PDF, it reads the PDF to answer
-#
-# The graph (the "brain") looks like this:
-#
-#   START -> remember -> chat -+-> END          (no tool needed)
-#                         ^    |
-#                         |    +-> tools        (model asked for a tool)
-#                         +--------+
-#
-# Every piece of code below is copied from day3 / day4 / day5.
-# =========================================================
 
 import re
 import os
+import sys
 import json
 import uuid
 import asyncio
 import tempfile
+from pathlib import Path
 import streamlit as st
 import psycopg
 from psycopg.rows import dict_row
@@ -41,27 +26,26 @@ from langgraph.store.base import BaseStore
 
 st.set_page_config(page_title="All-in-One Chatbot", page_icon="🤖")
 
-# ----------------------------
-# Settings
-# ----------------------------
+
 DB_URI = "postgresql://postgres:postgres@localhost:5442/postgres?sslmode=disable"
 MODEL_NAME = "qwen3:0.6b"
 USER_ID = "saikat"  # fixed user, since there is no login system
 SESSIONS_NS = ("user", USER_ID, "sessions")  # where the list of chats is saved
 
-# The tool server from day 3 (started with uv, exactly like day 3)
-SERVER_FOLDER = "/home/imtiaj-hossain-saikat/Documents/BJIT/langgraph/day3/custom-mcp-server"
+# The tool server from day 3. It lives next to this project. We run it with ITS
+# OWN venv python (that venv has fastmcp); if it is missing, we fall back to the
+# python that is running Streamlit.
+SERVER_FILE = (
+    Path(__file__).resolve().parent.parent
+    / "day3" / "custom-mcp-server" / "src" / "custom_mcp_server" / "server.py"
+)
+_server_venv_python = SERVER_FILE.parents[2] / ".venv" / "Scripts" / "python.exe"
+SERVER_PYTHON = str(_server_venv_python) if _server_venv_python.exists() else sys.executable
 SERVERS = {
     "custom-tools": {
         "transport": "stdio",
-        "command": "/home/imtiaj-hossain-saikat/.local/bin/uv",
-        "args": [
-            "run",
-            "--project",
-            SERVER_FOLDER,
-            "python",
-            SERVER_FOLDER + "/src/custom_mcp_server/server.py",
-        ],
+        "command": SERVER_PYTHON,
+        "args": [str(SERVER_FILE)],
     }
 }
 

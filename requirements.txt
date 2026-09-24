@@ -1,0 +1,49 @@
+# =========================================================
+# CENTRAL requirements.txt  (one file for the whole langgraph course)
+# Create the central venv once, then install everything with:
+#   python3 -m venv .venv && source .venv/bin/activate
+#   pip install -r requirements.txt
+# =========================================================
+
+# ---- Web UI ----
+streamlit
+
+# ---- LangChain / LangGraph core (all days) ----
+langchain
+langchain-core
+langchain-community
+langchain-experimental
+langchain-text-splitters
+langgraph
+pydantic
+python-dotenv
+
+# ---- LLM providers ----
+langchain-ollama          # local Ollama models (qwen3)
+langchain-google-genai    # Gemini (day 2 notebooks)
+langchain-openai          # OpenAI style clients (day 1-4 notebooks)
+
+# ---- Tools (day 2 / day 3) ----
+ddgs
+duckduckgo-search
+wikipedia
+requests
+beautifulsoup4
+langchain-mcp-adapters>=0.3.2   # lets LangChain use MCP tools (day 3)
+mcp<2                           # langchain-mcp-adapters breaks with mcp 2.x, so keep it below 2
+# NOTE: "fastmcp" is NOT installed here on purpose. fastmcp 4 needs mcp 2.x, which
+# clashes with the line above. The tool server (day3/custom-mcp-server) runs in its
+# own uv environment, and app.py starts it with `uv run` (same as day 3).
+
+# ---- Memory (day 4): Postgres short-term + long-term memory ----
+langgraph-checkpoint-postgres
+psycopg[binary,pool]
+
+# ---- RAG (day 5): PDF + embeddings + vector search ----
+pypdf
+sentence-transformers
+langchain-huggingface
+faiss-cpu
+
+# ---- Jupyter notebooks (day 1-5) ----
+ipykernel
